@@ -85,7 +85,7 @@ class Bank:
         self.e2 = Entry(self.f,textvariable=Bank.password,show='*',bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
         self.e2.grid(row=1,column=1,padx=30)
         
-        self.b3 = Button(self.f,bg='gray',text='forget forward ?',font=('Times','12','bold'),command=self.login,fg='red',activeforeground='#123456',width=30,bd=0)
+        self.b3 = Button(self.f,bg='gray',text='forget forward ?',font=('Times','12','bold'),command=self.login,fg='red',width=30,bd=0)
         self.b3.grid(row=2,column=1)
 
 
