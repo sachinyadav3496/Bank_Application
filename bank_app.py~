@@ -49,8 +49,11 @@ class Bank:
         print(UserName)
         print(Password)
         try :
-
+<<<<<<< HEAD
+            db = sql.connect('localhost','root','abc','bankapp')
+=======
             db = sql.connect('localhost','bank','bank','bank')
+>>>>>>> 0338d4efef1d831d08f6606f500a426fa88e7724
             c = db.cursor()
             cmd = "select * from user where name = '{}'".format(UserName)
             c.execute(cmd)
