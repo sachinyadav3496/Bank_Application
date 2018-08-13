@@ -14,10 +14,12 @@ class Bank:
         self.master.wm_minsize(self.ws,self.hs)
 
         self.menu_forget = False
+        
+    
     def run(self):
         self.main_frame()
-    def menu(self):
 
+    def menu(self):
         self.menu = tk.Frame(self.master,bg="gray")
         
         self.m_b1 = tk.Button(self.menu,text='Debit',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
@@ -26,7 +28,7 @@ class Bank:
         self.m_b2 = tk.Button(self.menu,text='Credit',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
         self.m_b2.grid(row=2,column=0,padx=30,pady=20)
         
-        self.m_b3 = tk.Button(self.menu,text='Update Profile',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b3 = tk.Button(self.menu,text='Update Profile',bg="gray",font=('Times','30','bold'),command=self.show_profile,fg="#003b8b")
         self.m_b3.grid(row=3,column=0,padx=30,pady=30)
 
 
@@ -34,12 +36,37 @@ class Bank:
         self.m_b4.grid(row=4,column=0,padx=30,pady=40)
         
         self.menu.grid(padx=self.ws*.4,pady=self.hs*.2)
-
+   
     def show_f(self):
         self.menu.grid_forget()
         self.menu_forget = True
         self.f.grid()
     
+    def show_m(self):
+        self.profframe.grid_forget()
+        self.menu.grid()
+
+
+
+    def show_profile(self):
+        self.menu.grid_forget()
+        
+        self.profframe = tk.Frame(self.master,bg="gray")
+        
+        self.m_b1 = tk.Button(self.profframe,text='Update Name',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b1.grid(row=1,column=0,padx=30,pady=10)
+        
+        self.m_b2 = tk.Button(self.profframe,text='Update Password',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b2.grid(row=2,column=0,padx=30,pady=10)
+        
+        self.m_b3 = tk.Button(self.profframe,text='Back',bg="gray",font=('Times','30','bold'),command=self.show_m,fg="#003b8b")
+        self.m_b3.grid(row=3,column=0,padx=30,pady=10)
+        
+        self.profframe.grid(padx=self.ws*.4,pady=self.hs*.2)
+         
+
+
+
     def main_frame(self):
 
         self.f = Frame(self.master,bg='gray')
