@@ -49,7 +49,7 @@ class Bank:
         print(UserName)
         print(Password)
         try :
-            db = sql.connect('localhost','root','','bank')
+            db = sql.connect('localhost','root','abc','bankapp')
             c = db.cursor()
             cmd = "select * from user where name = '{}'".format(UserName)
             c.execute(cmd)
