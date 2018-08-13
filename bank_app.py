@@ -8,19 +8,38 @@ class Bank:
     def __init__(self,master):
         self.master = master()
         self.master.title('BANK Application')
-        self.master.wm_minsize(500,500)
+        self.ws=self.master.winfo_screenwidth()
+        self.hs=self.master.winfo_screenheight()
+
+        self.master.wm_minsize(self.ws,self.hs)
+
         self.menu_forget = False
     def run(self):
         self.main_frame()
     def menu(self):
-        self.menu = tk.Frame(self.master)
-        self.m_b1 = tk.Button(self.menu,text='Hello World',command=self.show_f)
-        self.m_b1.pack()
-        self.menu.grid()
+
+        self.menu = tk.Frame(self.master,bg="gray")
+        
+        self.m_b1 = tk.Button(self.menu,text='Debit',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b1.grid(row=1,column=0,padx=30,pady=10)
+
+        self.m_b2 = tk.Button(self.menu,text='Credit',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b2.grid(row=2,column=0,padx=30,pady=20)
+        
+        self.m_b3 = tk.Button(self.menu,text='Update Profile',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b3.grid(row=3,column=0,padx=30,pady=30)
+
+
+        self.m_b4 = tk.Button(self.menu,text='Log Out',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#ff0000")
+        self.m_b4.grid(row=4,column=0,padx=30,pady=40)
+        
+        self.menu.grid(padx=self.ws*.4,pady=self.hs*.2)
+
     def show_f(self):
         self.menu.grid_forget()
         self.menu_forget = True
         self.f.grid()
+    
     def main_frame(self):
 
         self.f = Frame(self.master,bg='gray')
@@ -39,7 +58,8 @@ class Bank:
         self.b1 = Button(self.f,bg='gray',text='LOGIN',font=('Times','20','bold'),command=self.login,fg='#123456')
         self.master.bind('<Return>',self.login)
         self.b1.grid(row=2,column=0,columnspan=4,padx=70,pady=50)
-        self.f.grid(padx=50,pady=120,ipadx=50,ipady=50)
+
+        self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
 
 
 
