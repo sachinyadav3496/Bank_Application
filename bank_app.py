@@ -22,6 +22,9 @@ class Bank:
     def menu(self):
         self.menu = tk.Frame(self.master,bg="gray")
         
+        self.m_l1 = Label(self.menu,text='Welcome {}'.format(Bank.data[1]),bg="gray",font=('Times','30','bold'),fg="#ffffff")
+        self.m_l1.grid(row=0,column=1,padx=30,pady=10)
+        
         self.m_b1 = tk.Button(self.menu,text='Debit',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
         self.m_b1.grid(row=1,column=0,padx=30,pady=10)
 
@@ -33,9 +36,9 @@ class Bank:
 
 
         self.m_b4 = tk.Button(self.menu,text='Log Out',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#ff0000")
-        self.m_b4.grid(row=4,column=0,padx=30,pady=40)
+        self.m_b4.grid(row=4,column=2,padx=30,pady=40)
         
-        self.menu.grid(padx=self.ws*.4,pady=self.hs*.2)
+        self.menu.grid(padx=self.ws*.2,pady=self.hs*.1)
    
     def show_f(self):
         self.menu.grid_forget()
@@ -52,17 +55,31 @@ class Bank:
         self.menu.grid_forget()
         
         self.profframe = tk.Frame(self.master,bg="gray")
+
+        print(Bank.data)
+
         
-        self.m_b1 = tk.Button(self.profframe,text='Update Name',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
-        self.m_b1.grid(row=1,column=0,padx=30,pady=10)
+        self.p_l1 = Label(self.profframe,text='Account No:{}'.format(Bank.data[0]),bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.p_l1.grid(row=1,column=1,padx=30,pady=10)
         
-        self.m_b2 = tk.Button(self.profframe,text='Update Password',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
-        self.m_b2.grid(row=2,column=0,padx=30,pady=10)
+        self.p_l2 = Label(self.profframe,text='Account Name:{}'.format(Bank.data[1]),bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.p_l2.grid(row=2,column=1,padx=30,pady=10)
         
-        self.m_b3 = tk.Button(self.profframe,text='Back',bg="gray",font=('Times','30','bold'),command=self.show_m,fg="#003b8b")
-        self.m_b3.grid(row=3,column=0,padx=30,pady=10)
+        self.p_l3 = Label(self.profframe,text='Balance:{}'.format(Bank.data[3]),bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.p_l3.grid(row=3,column=1,padx=30,pady=10)
         
-        self.profframe.grid(padx=self.ws*.4,pady=self.hs*.2)
+        self.p_b1 = tk.Button(self.profframe,text='Update Name',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.p_b1.grid(row=4,column=1,padx=30,pady=10)
+        
+        self.p_b2 = tk.Button(self.profframe,text='Update Password',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.p_b2.grid(row=5,column=1,padx=30,pady=10)
+        
+        self.p_b3 = tk.Button(self.profframe,text='<<Back',bg="gray",font=('Times','20','bold'),command=self.show_m,fg="#000000")
+
+        self.p_b3.grid(row=6,column=0,padx=10,pady=10,ipadx=10,ipady=10)
+        
+
+        self.profframe.grid(padx=self.ws*.3,pady=self.hs*.2)
          
 
 
@@ -98,6 +115,7 @@ class Bank:
         
         self.master.bind('<Return>',self.login)
         self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
+        #self.f.grid_propagate(False)
 
 
 
@@ -112,10 +130,12 @@ class Bank:
             c = db.cursor()
             cmd = "select * from user where name = '{}'".format(UserName)
             c.execute(cmd)
-            data = c.fetchone()
+            Bank.data = c.fetchone()
+            
             self.password.set('')
-            if data : 
-                if Password == data[2] : 
+            
+            if Bank.data : 
+                if Password == Bank.data[2] : 
                     self.f.grid_forget()
                     #messagebox.showinfo("Information","!!Khud bhi kuch karo sara main hi karoo yaha")
                     if self.menu_forget : 
