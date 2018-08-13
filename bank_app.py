@@ -80,12 +80,23 @@ class Bank:
 
         self.l2 = Label(self.f,text='Password : ',bg='gray',font=('Times','30','bold'),fg='#123456')
         self.l2.grid(row=1,column=0,ipadx=50)
+        
+        
         self.e2 = Entry(self.f,textvariable=Bank.password,show='*',bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
         self.e2.grid(row=1,column=1,padx=30)
-        self.b1 = Button(self.f,bg='gray',text='LOGIN',font=('Times','20','bold'),command=self.login,fg='#123456')
-        self.master.bind('<Return>',self.login)
-        self.b1.grid(row=2,column=0,columnspan=4,padx=70,pady=50)
+        
+        self.b3 = Button(self.f,bg='gray',text='forget forward ?',font=('Times','12','bold'),command=self.login,fg='red',activeforeground='#123456',width=30,bd=0)
+        self.b3.grid(row=2,column=1)
 
+
+
+        self.b1 = Button(self.f,bg='gray',text='LOGIN',font=('Times','20','bold'),command=self.login,fg='#123456')
+        self.b1.grid(row=3,column=0,columnspan=4,padx=20,pady=50)
+        
+        self.b2 = Button(self.f,bg='gray',text='SIGNUP',font=('Times','20','bold'),command=self.login,fg='#123456')
+        self.b2.grid(row=3,column=1,columnspan=4)
+        
+        self.master.bind('<Return>',self.login)
         self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
 
 
