@@ -28,10 +28,10 @@ class Bank:
         self.m_l1 = Label(self.menu,text='Welcome {}'.format(Bank.data[1]),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
         self.m_l1.grid(row=0,column=0,padx=60,pady=10)
 
-        self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.debit,fg="#003b8b")
         self.m_b1.grid(row=1,column=0,padx=60,pady=10)
 
-        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.credit,fg="#003b8b")
         self.m_b2.grid(row=2,column=0,padx=76,pady=20)
 
         self.m_b3 = tk.Button(self.menu,text='Profile',bd=0,bg="#777777",font=('Times','20','bold'),command=self.show_profile,fg="#aadcba")
@@ -43,6 +43,13 @@ class Bank:
         self.m_b4.grid(row=3,column=1,padx=76,pady=15)
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
+    def credit(self):
+        messagebox.showinfo("CREDIT","Working on This Feature\nIt Will be available soon")
+
+    def debit(self):
+        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
+
+
     def show_f(self):
         self.menu.grid_forget()
         self.menu_forget = True
@@ -51,7 +58,6 @@ class Bank:
     def show_m(self):
         self.profframe.grid_forget()
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
-
 
 
     def show_profile(self):
@@ -74,6 +80,7 @@ class Bank:
         #print(Bank.data)
         self.p_l3 = Label(self.profframe,text='Balance:{}'.format(Bank.data[3]),bg="#777777",font=('Times','18','bold'),fg="#ffffff")
         self.p_l3.grid(row=2,column=0,columnspan=2,padx=64)
+
 
         self.p_b1 = tk.Button(self.profframe,text='Change Name',bg="#777777",font=('Times','20','bold'),width=13,command=self.showupdnameframe,fg="#003b8b")
         self.p_b1.grid(row=3,column=0,padx=64,pady=19)
@@ -187,6 +194,12 @@ class Bank:
         
         self.nameupdate.grid(row=6,column=0)
 
+    def change_name(self):
+        messagebox.showinfo("Change Name","Working on This Feature\nIt Will be available soon")
+
+    def change_password(self):
+        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
+
 
     def main_frame(self):
 
@@ -217,15 +230,52 @@ class Bank:
         self.b1 = Button(self.f,bg='#777777',text='LOGIN',font=('Times','20','bold'),command=self.login,fg='#123456')
         self.b1.grid(row=4,column=0,columnspan=4,padx=19,pady=31)
 
-        self.b2 = Button(self.f,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.login,fg='#123456')
+        self.b2 = Button(self.f,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.signup,fg='#123456')
         self.b2.grid(row=4,column=1,columnspan=4)
 
         self.master.bind('<Return>',self.login)
 
         self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
         #self.f.grid_propagate(False)
+    def show_sf(self):
+            self.sp.grid_forget()
+            self.menu_forget = True
+            self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
 
 
+
+
+    def signup(self):
+            self.f.grid_forget()
+            self.sp = Frame(self.master,bg='#777777')
+
+            self.sl1 = Label(self.sp,text='UserName : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
+            self.sl1.grid(row=0,column=0,ipadx=40,pady=28)
+
+            self.se1 = Entry(self.sp,textvariable=Bank.username,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+            self.se1.grid(row=0,column=1)
+
+            self.sl2 = Label(self.sp,text='Password : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
+            self.sl2.grid(row=1,column=0)
+
+            self.se2 = Entry(self.sp,textvariable=Bank.password,show='*',bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+            self.se2.grid(row=1,column=1,padx=20)
+
+            self.sl3 = Label(self.sp,text='Balance : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
+            self.sl3.grid(row=2,column=0,ipadx=42,pady=27)
+            self.balance = StringVar()
+            self.se3 = Entry(self.sp,textvariable=self.balance,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+            self.se3.grid(row=2,column=1)
+
+
+            self.sb2 = Button(self.sp,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.signup,fg='#123456')
+            self.sb2.grid(row=3,column=1,columnspan=4)
+
+            self.sb3 = tk.Button(self.sp,text='<<Back',width=10,bg="#777777",font=('Times','18','bold'),command=self.show_sf,fg="#000000")
+            self.sb3.grid(row=3,column=0,padx=66,pady=17)
+            #self.master.bind('<Return>',self.login)
+
+            self.sp.grid(padx=self.ws*.3,pady=self.hs*.2)
 
     def login(self,event=None):
 
