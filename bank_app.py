@@ -32,7 +32,7 @@ class Bank:
         self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.show_f,fg="#003b8b")
         self.m_b2.grid(row=2,column=0,padx=76,pady=20)
 
-        self.m_b3 = tk.Button(self.menu,text='Profile',bd=0,bg="#777777",font=('Times','20','bold'),command=self.show_profile,fg="#ffffff")
+        self.m_b3 = tk.Button(self.menu,text='Profile',bd=0,bg="#777777",font=('Times','20','bold'),command=self.show_profile,fg="#aadcba")
         self.m_b3.grid(row=0,column=1,padx=76,pady=25)
 
 
