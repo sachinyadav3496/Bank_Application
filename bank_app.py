@@ -58,7 +58,6 @@ class Bank:
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
 
-
     def show_profile(self):
 
         self.menu.grid_forget()
@@ -127,9 +126,45 @@ class Bank:
 
         self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
         #self.f.grid_propagate(False)
+    def show_sf(self):
+            self.sp.grid_forget()
+            self.menu_forget = True
+            self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
+
+
+
 
     def signup(self):
-        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
+            self.f.grid_forget()
+            self.sp = Frame(self.master,bg='#777777')
+
+            self.sl1 = Label(self.sp,text='UserName : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
+            self.sl1.grid(row=0,column=0,ipadx=40,pady=28)
+
+            self.se1 = Entry(self.sp,textvariable=Bank.username,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+            self.se1.grid(row=0,column=1)
+
+            self.sl2 = Label(self.sp,text='Password : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
+            self.sl2.grid(row=1,column=0)
+
+            self.se2 = Entry(self.sp,textvariable=Bank.password,show='*',bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+            self.se2.grid(row=1,column=1,padx=20)
+
+            self.sl3 = Label(self.sp,text='Balance : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
+            self.sl3.grid(row=2,column=0,ipadx=42,pady=27)
+            self.balance = StringVar()
+            self.se3 = Entry(self.sp,textvariable=self.balance,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+            self.se3.grid(row=2,column=1)
+
+
+            self.sb2 = Button(self.sp,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.signup,fg='#123456')
+            self.sb2.grid(row=3,column=1,columnspan=4)
+
+            self.sb3 = tk.Button(self.sp,text='<<Back',width=10,bg="#777777",font=('Times','18','bold'),command=self.show_sf,fg="#000000")
+            self.sb3.grid(row=3,column=0,padx=66,pady=17)
+            #self.master.bind('<Return>',self.login)
+
+            self.sp.grid(padx=self.ws*.3,pady=self.hs*.2)
 
     def login(self,event=None):
 
