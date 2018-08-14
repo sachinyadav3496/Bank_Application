@@ -26,10 +26,10 @@ class Bank:
         self.m_l1 = Label(self.menu,text='Welcome {}'.format(Bank.data[1]),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
         self.m_l1.grid(row=0,column=0,padx=60,pady=10)
 
-        self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.debit,fg="#003b8b")
         self.m_b1.grid(row=1,column=0,padx=60,pady=10)
 
-        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.show_f,fg="#003b8b")
+        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.credit,fg="#003b8b")
         self.m_b2.grid(row=2,column=0,padx=76,pady=20)
 
         self.m_b3 = tk.Button(self.menu,text='Profile',bd=0,bg="#777777",font=('Times','20','bold'),command=self.show_profile,fg="#aadcba")
@@ -40,6 +40,13 @@ class Bank:
 
         self.m_b4.grid(row=3,column=1,padx=76,pady=15)
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
+
+    def credit(self):
+        messagebox.showinfo("CREDIT","Working on This Feature\nIt Will be available soon")
+
+    def debit(self):
+        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
+
 
     def show_f(self):
         self.menu.grid_forget()
@@ -67,15 +74,21 @@ class Bank:
         self.p_l3 = Label(self.profframe,text='Balance:{}'.format(Bank.data[3]),bg="#777777",font=('Times','18','bold'),fg="#ffffff")
         self.p_l3.grid(row=2,column=0,columnspan=2,padx=64)
 
-        self.p_b1 = tk.Button(self.profframe,text='Change Name',bg="#777777",font=('Times','20','bold'),width=13,command=self.show_f,fg="#003b8b")
+        self.p_b1 = tk.Button(self.profframe,text='Change Name',bg="#777777",font=('Times','20','bold'),width=13,command=self.change_name,fg="#003b8b")
         self.p_b1.grid(row=3,column=0,padx=64,pady=19)
 
-        self.p_b2 = tk.Button(self.profframe,text='Change Password',bg="#777777",font=('Times','20','bold'),width=13,command=self.show_f,fg="#003b8b")
+        self.p_b2 = tk.Button(self.profframe,text='Change Password',bg="#777777",font=('Times','20','bold'),width=13,command=self.change_password,fg="#003b8b")
         self.p_b2.grid(row=4,column=0,padx=64,pady=10)
 
         self.p_b3 = tk.Button(self.profframe,text='<<Back',width=10,bg="#777777",font=('Times','18','bold'),command=self.show_m,fg="#000000")
         self.p_b3.grid(row=5,column=1,padx=64,pady=18)
         self.profframe.grid(padx=self.ws*.3,pady=self.hs*.2)
+
+    def change_name(self):
+        messagebox.showinfo("Change Name","Working on This Feature\nIt Will be available soon")
+
+    def change_password(self):
+        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
 
 
     def main_frame(self):
@@ -107,7 +120,7 @@ class Bank:
         self.b1 = Button(self.f,bg='#777777',text='LOGIN',font=('Times','20','bold'),command=self.login,fg='#123456')
         self.b1.grid(row=4,column=0,columnspan=4,padx=19,pady=31)
 
-        self.b2 = Button(self.f,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.login,fg='#123456')
+        self.b2 = Button(self.f,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.signup,fg='#123456')
         self.b2.grid(row=4,column=1,columnspan=4)
 
         self.master.bind('<Return>',self.login)
@@ -115,7 +128,8 @@ class Bank:
         self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
         #self.f.grid_propagate(False)
 
-
+    def signup(self):
+        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
 
     def login(self,event=None):
 
