@@ -68,10 +68,10 @@ class Bank:
         self.p_l3 = Label(self.profframe,text='Balance:{}'.format(Bank.data[3]),bg="gray",font=('Times','30','bold'),fg="#00ff00")
         self.p_l3.grid(row=3,column=1,padx=30,pady=10)
         
-        self.p_b1 = tk.Button(self.profframe,text='Update Name',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.p_b1 = tk.Button(self.profframe,text='Update Name',bg="gray",font=('Times','30','bold'),command=self.updname,fg="#003b8b")
         self.p_b1.grid(row=4,column=1,padx=30,pady=10)
         
-        self.p_b2 = tk.Button(self.profframe,text='Update Password',bg="gray",font=('Times','30','bold'),command=self.show_f,fg="#003b8b")
+        self.p_b2 = tk.Button(self.profframe,text='Update Password',bg="gray",font=('Times','30','bold'),command=self.updpass,fg="#003b8b")
         self.p_b2.grid(row=5,column=1,padx=30,pady=10)
         
         self.p_b3 = tk.Button(self.profframe,text='<<Back',bg="gray",font=('Times','20','bold'),command=self.show_m,fg="#000000")
@@ -79,10 +79,65 @@ class Bank:
         self.p_b3.grid(row=6,column=0,padx=10,pady=10,ipadx=10,ipady=10)
         
 
-        self.profframe.grid(padx=self.ws*.3,pady=self.hs*.2)
+        self.profframe.grid(padx=self.ws*.2,pady=self.hs*.1)
          
+    def cmdupd(self):
+        acc=Bank.data[0]
+        cmd="update user SET name='{}' where acc='{}'".format(self.up_name.get(),acc)
+        print(cmd)
+        try:
+            Bank.c.execute(cmd)
+            Bank.db.commit()
+
+            s='\nName updated successfully for account {} '.format(acc)
+        except Exception as e:
+            s='Error in updating name{}'.format(e)
+
+        messagebox.showinfo("Information",s)
+    def cmdupdpass(self):
+        acc=Bank.data[2]
+    
+
+    def updpass(self):
+        self.nameupdate.destroy()
+        
+        self.passupdate = tk.Frame(self.profframe,bg="gray")
 
 
+        
+        self.up_name_lbl = Label(self.profframe,text='Old password:',bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.up_name_lbl.grid(row=7,column=0)
+        
+        self.up_name = Entry(self.profframe,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+        self.up_name.grid(row=7,column=1)
+
+        self.up_name_lbl = Label(self.profframe,text='New password:',bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.up_name_lbl.grid(row=8,column=0)
+        
+        self.up_name = Entry(self.profframe,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+        self.up_name.grid(column=1)
+
+        self.name_b1=tk.Button(self.profframe,text="Update",bg="gray",font=('Times','20','bold'),command=self.cmdupd,fg="#000000")
+        self.name_b1.grid(column=2,padx=30,pady=10)
+        
+        self.passupdate.grid(row=7,column=1)
+
+        
+    def updname(self):
+        acc=Bank.data[0]
+        self.nameupdate = tk.Frame(self.profframe,bg="gray")
+
+
+        self.up_name_lbl = Label( self.nameupdate,text='New name:',bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.up_name_lbl.grid(row=0,column=0)
+        
+        self.up_name = Entry( self.nameupdate,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+        self.up_name.grid(row=0,column=1)
+
+        self.name_b1=tk.Button( self.nameupdate,text="Update",bg="gray",font=('Times','20','bold'),command=self.cmdupd,fg="#000000")
+        self.name_b1.grid(row=0,column=2,padx=30,pady=10)
+        
+        self.nameupdate.grid(row=7,column=1)
 
     def main_frame(self):
 
@@ -126,11 +181,11 @@ class Bank:
         print(Password)
         try :
 
-            db = sql.connect('localhost','bank','bank','bank')
-            c = db.cursor()
+            Bank.db = sql.connect('localhost','bank','bank','bank')
+            Bank.c = Bank.db.cursor()
             cmd = "select * from user where name = '{}'".format(UserName)
-            c.execute(cmd)
-            Bank.data = c.fetchone()
+            Bank.c.execute(cmd)
+            Bank.data = Bank.c.fetchone()
             
             self.password.set('')
             
