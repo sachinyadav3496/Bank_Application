@@ -28,10 +28,10 @@ class Bank:
         self.m_l1 = Label(self.menu,text='Welcome {}'.format(Bank.data[1]),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
         self.m_l1.grid(row=0,column=0,padx=60,pady=10)
 
-        self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.debit,fg="#003b8b")
+        self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.debframe,fg="#003b8b")
         self.m_b1.grid(row=1,column=0,padx=60,pady=10)
 
-        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.credit,fg="#003b8b")
+        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.credframe,fg="#003b8b")
         self.m_b2.grid(row=2,column=0,padx=76,pady=20)
 
         self.m_b3 = tk.Button(self.menu,text='Profile',bd=0,bg="#777777",font=('Times','20','bold'),command=self.show_profile,fg="#aadcba")
@@ -43,11 +43,70 @@ class Bank:
         self.m_b4.grid(row=3,column=1,padx=76,pady=15)
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
+    def credframe(self):
+        
+        self.credframe = tk.Frame(self.menu,bg="#777777")
+        
+        self.up_amnt_lbl = Label(self.credframe,text='Enter amount to credit',bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.up_amnt_lbl.grid(row=0,column=0,pady=10)
+        
+        self.up_amnt = Entry(self.credframe,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+        self.up_amnt.grid(row=1,column=0,pady=10)
+        
+        self.up_amnt_btn = tk.Button(self.credframe,text='update balance',bg="#777777",font=('Times','20','bold'),command=self.credit,fg="#aadcba")
+        self.up_amnt_btn.grid(row=2,column=0,pady=10)
+
+
+        self.credframe.grid(row=4,column=0,padx=76,pady=25)
+
+    def debframe(self):
+        
+        self.debframe = tk.Frame(self.menu,bg="#777777")
+        
+        self.up_amnt_lbl = Label(self.debframe,text='Enter amount to debit ',bg="gray",font=('Times','30','bold'),fg="#00ff00")
+        self.up_amnt_lbl.grid(row=0,column=0,pady=10)
+        
+        self.up_amnt = Entry(self.debframe,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
+        self.up_amnt.grid(row=1,column=0,pady=10)
+        
+        self.up_amnt_btn = tk.Button(self.debframe,text='update balance',bg="#777777",font=('Times','20','bold'),command=self.debit,fg="#aadcba")
+        self.up_amnt_btn.grid(row=2,column=0,pady=10)
+
+
+        self.debframe.grid(row=4,column=0,padx=76,pady=25)
+
+
+
     def credit(self):
-        messagebox.showinfo("CREDIT","Working on This Feature\nIt Will be available soon")
+        acc=Bank.data[0]
+        amnt=self.up_amnt.get()
+
+        cmd="update user SET balance=balance+{} where acc='{}'".format(amnt,acc)
+        Bank.c.execute(cmd)
+        Bank.db.commit()
+
+        s='\n'+str(amnt)+' credited to the account  {} '.format(acc)
+    
+        messagebox.showinfo("CREDIT",s)
 
     def debit(self):
-        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
+        acc=Bank.data[0]
+        amnt=float(self.up_amnt.get())
+        print('amnt:',amnt)
+        print('balance',Bank.data[3])
+
+
+        if amnt <= Bank.data[3]:
+            cmd="update user SET balance=balance-{} where acc='{}'".format(amnt,acc)
+            Bank.c.execute(cmd)
+            Bank.db.commit()
+
+            s='\n'+str(amnt)+' debited from the account {} '.format(acc)
+    
+        else:
+            s='\nInsufficient balance for the account {}\n'.format(acc)
+    
+        messagebox.showinfo("Debit",s)
 
 
     def show_f(self):
@@ -194,12 +253,6 @@ class Bank:
         
         self.nameupdate.grid(row=6,column=0)
 
-    def change_name(self):
-        messagebox.showinfo("Change Name","Working on This Feature\nIt Will be available soon")
-
-    def change_password(self):
-        messagebox.showinfo("Signup","Working on This Feature\nIt Will be available soon")
-
 
     def main_frame(self):
 
@@ -237,6 +290,7 @@ class Bank:
 
         self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
         #self.f.grid_propagate(False)
+    
     def show_sf(self):
             self.sp.grid_forget()
             self.menu_forget = True
