@@ -434,27 +434,31 @@ class Bank:
         uname = self.uname.get().lower()
         password  = self.creds.get()
         balance = self.bal.get()
-        # print("User ",uname)
-        # print("Password ",password)
-        # print("Balance ",balance)
-        try :
-            db = sql.connect('localhost','bank','bank','bank')
-            c = db.cursor()
-            c.execute('select * from user where name="{}"'.format(uname))
-            d = c.fetchone()
-            if d :
-                messagebox.showerror("UserExist","User with this name is already exists.\n Please Login if you are already a user \nelse choose another name")
-            else :
-                cmd = "insert into user(name,password,balance) values('{}','{}',{})".format(uname,password,balance)
-                c.execute(cmd)
-                db.commit()
-                messagebox.showinfo("Account Created","Congratulations!! Your Account is Successfully Created\nPlease LOGIN to Enjoy your services")
-                self.sp.grid_forget()
-            self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
+        if uname and password and balance :
+            try :
+                balance = float(balance)
+                db = sql.connect('localhost','bank','bank','bank')
+                c = db.cursor()
+                c.execute('select * from user where name="{}"'.format(uname))
+                d = c.fetchone()
+                if d :
+                    messagebox.showerror("UserExist","User with this name is already exists.\n Please Login if you are already a user \nelse choose another name")
+                else :
+                    cmd = "insert into user(name,password,balance) values('{}','{}',{})".format(uname,password,balance)
+                    c.execute(cmd)
+                    db.commit()
+                    messagebox.showinfo("Account Created","Congratulations!! Your Account is Successfully Created\nPlease LOGIN to Enjoy your services")
+                    self.sp.grid_forget()
+                self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
+            except ValueError as e : 
+                messagebox.showerror("ERROR","Please Enter a Valid Amount to Deposit Initial")
+                
 
-
-        except Exception as e :
-            print("Error!!",e)
+            except Exception as e :
+                messagebox.showerror("ERROR","SOMETHING WENT WRONG\nError!!{}".format(e))
+                
+        else :
+            messagebox.showerror("INPUT","Please fill-in all the Details")
 
     def login(self,event=None):
 
