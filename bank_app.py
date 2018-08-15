@@ -31,7 +31,7 @@ class Bank:
         self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.debframe,fg="#003b8b")
         self.m_b1.grid(row=1,column=0,padx=60,pady=10)
 
-        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.credframe,fg="#003b8b")
+        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.credit_Balance,fg="#003b8b")
         self.m_b2.grid(row=2,column=0,padx=76,pady=20)
 
         self.m_b3 = tk.Button(self.menu,text='Profile',bd=0,bg="#777777",font=('Times','20','bold'),command=self.show_profile,fg="#aadcba")
@@ -43,21 +43,37 @@ class Bank:
         self.m_b4.grid(row=3,column=1,padx=76,pady=15)
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
-    def credframe(self):
+    def credit_Balance(self):
 
-        self.credframe = tk.Frame(self.menu,bg="#777777")
+        self.menu.grid_forget()
 
-        self.up_amnt_lbl = Label(self.credframe,text='Enter amount to credit',bg="gray",font=('Times','30','bold'),fg="#00ff00")
-        self.up_amnt_lbl.grid(row=0,column=0,pady=10)
+        self.credframe = tk.Frame(self.master,bg="#777777")
+        
+        self.up_amnt_lbl1 = Label(self.credframe,text='Welcome {} to Credit Services'.format(self.user),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
+        self.up_amnt_lbl1.grid(row=0,column=0,columnspan=2,pady=10)
+
+        self.up_amnt_lbl2 = Label(self.credframe,text='Enter amount to credit',bg="#777777",font=('Times','26','bold'),fg="#ffffff")
+        self.up_amnt_lbl2.grid(row=1,column=0,columnspan=2,pady=10)
+        
+        self.up_amnt_lbl = Label(self.credframe,text='Amount',bg="#777777",font=('Times','25','bold'),fg="#ffffff")
+        self.up_amnt_lbl.grid(row=2,column=0,pady=10)
 
         self.up_amnt = Entry(self.credframe,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
-        self.up_amnt.grid(row=1,column=0,pady=10)
+        self.up_amnt.grid(row=2,column=1,pady=10,padx=30)
 
-        self.up_amnt_btn = tk.Button(self.credframe,text='update balance',bg="#777777",font=('Times','20','bold'),command=self.credit,fg="#aadcba")
-        self.up_amnt_btn.grid(row=2,column=0,pady=10)
+        self.up_amnt_btn = tk.Button(self.credframe,text='update balance',bg="#777777",font=('Times','20','bold'),width=15,command=self.credit,fg="#000000")
+        self.up_amnt_btn.grid(row=3,column=1,pady=13,padx=72)
+        
+        self.up_amnt_btn1 = tk.Button(self.credframe,text='<<Back',bg="#777777",font=('Times','18','bold'),command=self.show_m5,fg="#000000",width=10)
+        self.up_amnt_btn1.grid(row=4,column=0,pady=16,padx=40)
 
+        self.credframe.grid(padx=self.ws*.3,pady=self.hs*.2)
+    
+    
+    def show_m5(self):
+        self.credframe.grid_forget()
+        self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
-        self.credframe.grid(row=4,column=0,padx=76,pady=25)
 
     def debframe(self):
     
@@ -268,6 +284,11 @@ class Bank:
         self.pass_b2.grid(row=3,column=0,pady=15,padx=30)
 
         self.passupdate.grid(padx=self.ws*.3,pady=self.hs*.2)
+
+    def show_m3(self):
+
+        self.passupdate.grid_forget()
+        self.profframe.grid(padx=self.ws*.3,pady=self.hs*.2)
 
 
     def change_name(self):
