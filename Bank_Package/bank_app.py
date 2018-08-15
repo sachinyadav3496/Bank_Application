@@ -2,12 +2,12 @@ from tkinter import *
 import tkinter as tk
 import pymysql as sql
 from tkinter import messagebox
+from signup import Signup
 
-
-class Bank:
+class Bank(Signup):
 
     def __init__(self,master):
-
+        Signup.__init__(self)
         self.master = master()
         self.master.title('BANK Application')
         self.ws=self.master.winfo_screenwidth()
@@ -48,13 +48,13 @@ class Bank:
         self.menu.grid_forget()
 
         self.credframe = tk.Frame(self.master,bg="#777777")
-        
+
         self.up_amnt_lbl1 = Label(self.credframe,text='Welcome {} to Credit Services'.format(self.user),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
         self.up_amnt_lbl1.grid(row=0,column=0,columnspan=2,pady=10)
 
         self.up_amnt_lbl2 = Label(self.credframe,text='Enter amount to credit',bg="#777777",font=('Times','26','bold'),fg="#ffffff")
         self.up_amnt_lbl2.grid(row=1,column=0,columnspan=2,pady=10)
-        
+
         self.up_amnt_lbl = Label(self.credframe,text='Amount',bg="#777777",font=('Times','25','bold'),fg="#ffffff")
         self.up_amnt_lbl.grid(row=2,column=0,pady=10)
 
@@ -63,12 +63,12 @@ class Bank:
 
         self.up_amnt_btn = tk.Button(self.credframe,text='update balance',bg="#777777",font=('Times','20','bold'),width=15,command=self.credit,fg="#000000")
         self.up_amnt_btn.grid(row=3,column=1,pady=13,padx=72)
-        
+
         self.up_amnt_btn1 = tk.Button(self.credframe,text='<<Back',bg="#777777",font=('Times','18','bold'),command=self.show_m5,fg="#000000",width=10)
         self.up_amnt_btn1.grid(row=4,column=0,pady=16,padx=40)
 
         self.credframe.grid(padx=self.ws*.3,pady=self.hs*.2)
-    
+
     def credit(self):
         if self.up_amnt.get():
             try :
@@ -84,47 +84,47 @@ class Bank:
                 c.close()
                 db.close()
                 s='Sucessfully {} rs credited to the account associated with {}.\nYour Updated Balance is now {}.'.format(amount,self.user,amount+bal)
-                messagebox.showinfo("CREDIT",s) 
+                messagebox.showinfo("CREDIT",s)
                 self.credframe.grid_forget()
                 self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
-                
+
             except ValueError as e :
                 messagebox.showerror("!!Input Error!!","Please Enter a Valid Amount")
         else :
             messagebox.showerror("!!Input Error!!","Please Enter Some Amount to Credit")
-    
+
     def show_m5(self):
         self.credframe.grid_forget()
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
 
     def debframe(self):
-    
+
         self.menu.grid_forget()
         self.debit_Balance = tk.Frame(self.master,bg="#777777")
-        
+
         self.up_amnt_lbl1 = Label(self.debit_Balance,text='Welcome {} to Debit Services'.format(self.user),font=('Times','20','bold'),fg="#ffffff",bg='#777777')
         self.up_amnt_lbl1.grid(row=0,column=0,columnspan=2,pady=10,padx=30)
 
         self.up_amnt_lbl = Label(self.debit_Balance,text='Enter amount to debit ',font=('Times','23','bold'),fg="#ffffff",bg='#777777')
         self.up_amnt_lbl.grid(row=1,column=0,columnspan=2,pady=10,padx=30)
-        
+
         self.up_amnt_lbl2 = Label(self.debit_Balance,text='Amount',font=('Times','20','bold'),fg="#ffffff",bg='#777777')
         self.up_amnt_lbl2.grid(row=2,column=0,pady=10,padx=30)
-        
+
 
         self.up_amnt = Entry(self.debit_Balance,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
         self.up_amnt.grid(row=2,column=1,pady=12,padx=55)
 
         self.up_amnt_btn = tk.Button(self.debit_Balance,text='update',bg="#777777",font=('Times','20','bold'),command=self.update_balance,fg="#000000",width=12)
         self.up_amnt_btn.grid(row=3,column=1,pady=16)
-        
+
         self.up_amnt_btn1 = tk.Button(self.debit_Balance,text='<<Back',bg="#777777",font=('Times','18','bold'),command=self.show_m4,fg="#000000",width=10)
         self.up_amnt_btn1.grid(row=4,column=0,pady=17,padx=40)
 
 
         self.debit_Balance.grid(padx=self.ws*.3,pady=self.hs*.2)
-    
+
     def show_m4(self):
         self.debit_Balance.grid_forget()
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
@@ -141,19 +141,19 @@ class Bank:
                 bal = c.fetchone()[0]
                 if bal :
                     if amnt <= bal:
-                        
+
                         cmd="update user SET balance=balance-{} where name='{}'".format(amnt,self.user)
                         c.execute(cmd)
                         db.commit()
                         s='!!DEBITED SUCESSFULLY!! \n {}rs debited from Your Account\nYour Updated Balance is now {}.'.format(amnt,bal-amnt)
                         messagebox.showinfo("!!Sucess!!",s)
-                    
+
                     else:
-                        
+
                         s='\nInsufficient account balance\nyou only have {}rs in your account'.format(bal)
                         messagebox.showinfo("!!DEBIT ERROR!!",s)
 
-                    
+
                 else :
                     messagebox.showerror("!!UNKOWN ERROR!!","DATABASE LOOKUP Error \nSomething WEnt Wrong")
             except ValueError as e :
@@ -196,7 +196,7 @@ class Bank:
             self.udbal.set(data[3])
 
 
-            
+
         except Exception as e :
             messagebox.showerror("DataBASE Connectivity","!!Error!!Database Connection!!{}".format(e))
             exit(0)
@@ -243,15 +243,15 @@ class Bank:
                     db.commit()
                     messagebox.showinfo("!!Sucess!!","Your Password is sucessfully updated")
                     self.show_m3()
-                    
+
                 else :
                     messagebox.showerror("!!Invalid Error!!","!!Error!!\nSomething Went Wrong\nTry Again")
 
 
-                    
+
             except Exception as e :
                 messagebox.showerror("!!DataBase Error!!","Error!!{}".format(e))
-                
+
         else :
             messagebox.showerror("Input Error","Error!!Please Fill Passwords Properly")
 
@@ -279,7 +279,7 @@ class Bank:
 
         self.pass_b1=tk.Button(self.passupdate,text="Update",width=10,bg="gray",font=('Times','20','bold'),command=self.update_password,fg="#000000")
         self.pass_b1.grid(row=3,column=1,columnspan=2,padx=30,pady=22)
-        
+
         self.pass_b2=tk.Button( self.passupdate,text="<<Back",bg="gray",font=('Times','18','bold'),command=self.show_m3,fg="#000000")
         self.pass_b2.grid(row=3,column=0,pady=15,padx=30)
 
@@ -306,7 +306,7 @@ class Bank:
                 self.user = name
                 self.udname.set(name)
                 self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
-                
+
             else :
                 messagebox.showerror("NameError","Error!!Please Enter new username")
         except Exception as e :
@@ -340,7 +340,7 @@ class Bank:
     def show_m1(self):
         self.nameupdate.grid_forget()
         self.profframe.grid(padx=self.ws*.3,pady=self.hs*.2)
-    
+
 
 
     def main_frame(self):
@@ -386,72 +386,6 @@ class Bank:
 
 
 
-
-    def signup(self):
-
-            self.bal = StringVar()
-            self.uname = StringVar()
-            self.creds = StringVar()
-
-            self.f.grid_forget()
-            self.sp = Frame(self.master,bg='#777777')
-
-            self.sl1 = Label(self.sp,text='UserName : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
-            self.sl1.grid(row=0,column=0,ipadx=40,pady=28)
-
-            self.se1 = Entry(self.sp,textvariable=self.uname,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
-            self.se1.grid(row=0,column=1)
-
-            self.sl2 = Label(self.sp,text='Password : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
-            self.sl2.grid(row=1,column=0)
-
-            self.se2 = Entry(self.sp,textvariable=self.creds,show='*',bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
-            self.se2.grid(row=1,column=1,padx=20)
-
-            self.sl3 = Label(self.sp,text='Balance : ',bg='#777777',font=('Times','30','bold'),fg='#123456')
-            self.sl3.grid(row=2,column=0,ipadx=42,pady=27)
-
-            self.se3 = Entry(self.sp,textvariable=self.bal,bg='#123456',width=20,font=('Times','20','bold'),fg='#FFFFFF')
-            self.se3.grid(row=2,column=1)
-
-
-            self.sb2 = Button(self.sp,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.mksignup,fg='#123456')
-            self.sb2.grid(row=3,column=1,columnspan=4)
-
-            self.sb3 = tk.Button(self.sp,text='<<Back',width=10,bg="#777777",font=('Times','18','bold'),command=self.show_sf,fg="#000000")
-            self.sb3.grid(row=3,column=0,padx=66,pady=17)
-            self.sp.grid(padx=self.ws*.3,pady=self.hs*.2)
-
-    def mksignup(self):
-
-        uname = self.uname.get().lower()
-        password  = self.creds.get()
-        balance = self.bal.get()
-        if uname and password and balance :
-            try :
-                balance = float(balance)
-                db = sql.connect('localhost','bank','bank','bank')
-                c = db.cursor()
-                c.execute('select * from user where name="{}"'.format(uname))
-                d = c.fetchone()
-                if d :
-                    messagebox.showerror("UserExist","User with this name is already exists.\n Please Login if you are already a user \nelse choose another name")
-                else :
-                    cmd = "insert into user(name,password,balance) values('{}','{}',{})".format(uname,password,balance)
-                    c.execute(cmd)
-                    db.commit()
-                    messagebox.showinfo("Account Created","Congratulations!! Your Account is Successfully Created\nPlease LOGIN to Enjoy your services")
-                    self.sp.grid_forget()
-                self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
-            except ValueError as e : 
-                messagebox.showerror("ERROR","Please Enter a Valid Amount to Deposit Initial")
-                
-
-            except Exception as e :
-                messagebox.showerror("ERROR","SOMETHING WENT WRONG\nError!!{}".format(e))
-                
-        else :
-            messagebox.showerror("INPUT","Please fill-in all the Details")
 
     def login(self,event=None):
 
