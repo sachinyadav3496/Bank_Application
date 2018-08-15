@@ -69,6 +69,29 @@ class Bank:
 
         self.credframe.grid(padx=self.ws*.3,pady=self.hs*.2)
     
+    def credit(self):
+        if self.up_amnt.get():
+            try :
+                amount = float(self.up_amnt.get())
+                amnt=self.up_amnt.get()
+                db = sql.connect('localhost','bank','bank','bank')
+                c = db.cursor()
+                c.execute('select balance from user where name="{}"'.format(self.user))
+                bal = c.fetchone()[0]
+                cmd="update user SET balance=balance+{} where name='{}'".format(amnt,self.user)
+                c.execute(cmd)
+                db.commit()
+                c.close()
+                db.close()
+                s='Sucessfully {} rs credited to the account associated with {}.\nYour Updated Balance is now {}.'.format(amount,self.user,amount+bal)
+                messagebox.showinfo("CREDIT",s) 
+                self.credframe.grid_forget()
+                self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
+                
+            except ValueError as e :
+                messagebox.showerror("!!Input Error!!","Please Enter a Valid Amount")
+        else :
+            messagebox.showerror("!!Input Error!!","Please Enter Some Amount to Credit")
     
     def show_m5(self):
         self.credframe.grid_forget()
@@ -107,14 +130,6 @@ class Bank:
         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
 
-    def credit(self):
-        acc=Bank.data[0]
-        amnt=self.up_amnt.get()
-        cmd="update user SET balance=balance+{} where acc='{}'".format(amnt,acc)
-        Bank.c.execute(cmd)
-        Bank.db.commit()
-        s='\n'+str(amnt)+' credited to the account  {} '.format(acc)
-        messagebox.showinfo("CREDIT",s)
 
     def update_balance(self):
         if self.up_amnt.get() :
@@ -209,19 +224,6 @@ class Bank:
 
         self.profframe.grid(padx=self.ws*.3,pady=self.hs*.2)
 
-    def cmdupd(self):
-        acc=Bank.data[0]
-        cmd="update user SET name='{}' where acc='{}'".format(self.up_name.get(),acc)
-        print(cmd)
-        try:
-            Bank.c.execute(cmd)
-            Bank.db.commit()
-
-            s='\nName updated successfully for account {} '.format(acc)
-        except Exception as e:
-            s='Error in updating name{}'.format(e)
-
-        messagebox.showinfo("Information",s)
 
     def update_password(self):
         old = self.Old_Password.get()
