@@ -376,14 +376,12 @@ class Bank:
 
         self.b2 = Button(self.f,bg='#777777',text='SIGNUP',font=('Times','20','bold'),command=self.signup,fg='#123456')
         self.b2.grid(row=4,column=1,columnspan=4)
-
         #self.master.bind('<Return>',self.login)
-
         self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
         #self.f.grid_propagate(False)
 
     def fpass(self):
-        messagebox.showinfo("Still Working","We are so Sorry!!\nWe are working on this feature.\nIt Will be available soon.")
+        messagebox.showinfo("PRIVACY","Due to your privacy reason you have to meet in person to nearest branch with all documents to update your password.")
 
     def show_sf(self):
             self.sp.grid_forget()
