@@ -3,64 +3,12 @@ import tkinter as tk
 import pymysql as sql
 from tkinter import messagebox
 from signup import Signup
-from login import Login
-from credit import CREDIT
-from debit import DEBIT
-from profile import PROFILE
 
-class Bank(Signup,Login,CREDIT,DEBIT,PROFILE):
-
-    def __init__(self,master):
-        Signup.__init__(self)
-        Login.__init__(self)
-        CREDIT.__init__(self)
-        DEBIT.__init__(self)
-        PROFILE.__init__(self)
-
-
-        self.master = master()
-        self.master.title('BANK Application')
-        self.ws=self.master.winfo_screenwidth()
-        self.hs=self.master.winfo_screenheight()
-        self.master.wm_minsize(self.ws,self.hs)
-        self.master.configure(background='#666666')
-        self.menu_forget = False
-        self.upd_pass=False
-        self.upd_name=False
-
+class Login():
     def run(self):
         self.main_frame()
 
-    def menu(self):
-
-        self.menu = tk.Frame(self.master,bg="#777777")
-
-        self.m_l1 = Label(self.menu,text='Welcome {}'.format(self.user),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
-        self.m_l1.grid(row=0,column=0,padx=60,pady=10)
-
-        self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.debframe,fg="#003b8b")
-        self.m_b1.grid(row=1,column=0,padx=60,pady=10)
-
-        self.m_b2 = tk.Button(self.menu,text='CREDIT',width=10,bg="#777777",font=('Times','20','bold'),command=self.credit_Balance,fg="#003b8b")
-        self.m_b2.grid(row=2,column=0,padx=76,pady=20)
-
-        self.m_b3 = tk.Button(self.menu,text='Profile',bd=0,bg="#777777",font=('Times','20','bold'),command=self.show_profile,fg="#aadcba")
-        self.m_b3.grid(row=0,column=1,padx=76,pady=25)
-
-
-        self.m_b4 = tk.Button(self.menu,text='LOGOUT',width=10,bg="#777777",font=('Times','18','bold'),command=self.show_f,fg="#ff0000")
-
-        self.m_b4.grid(row=3,column=1,padx=76,pady=15)
-        self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
-
-
-    def show_f(self):
-        self.menu.grid_forget()
-        self.menu_forget = True
-        self.f.grid(padx=self.ws*.3,pady=self.hs*.2)
-
-
-
+    
     def main_frame(self):
 
         self.f = Frame(self.master,bg='#777777')
@@ -105,7 +53,46 @@ class Bank(Signup,Login,CREDIT,DEBIT,PROFILE):
 
 
 
-root = Bank(Tk)
-root.run()
+    def login(self,event=None):
 
-mainloop()
+        UserName = self.e1.get().lower()
+        Password = self.e2.get()
+
+
+        try :
+
+            db = sql.connect('localhost','bank','bank','bank')
+            c = db.cursor()
+            cmd = "select * from user where name = '{}'".format(UserName)
+
+            c.execute(cmd)
+            data = c.fetchone()
+            self.password.set('')
+            if data :
+                if Password == data[2] :
+
+                    self.f.grid_forget()
+                    self.user = UserName
+                    if self.menu_forget :
+                        self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
+
+                    else :
+                        self.menu()
+
+                else :
+
+                    messagebox.showerror("Error","!!Invalid Password")
+
+            else :
+
+                messagebox.showerror("Error","!!No such user exists")
+                self.username.set('')
+
+        except Exception as e :
+
+            messagebox.showerror("Error","!!Check Data BAse Connectivity {}".format(e))
+
+
+
+
+
