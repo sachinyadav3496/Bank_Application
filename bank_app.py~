@@ -27,7 +27,7 @@ class Bank:
 
         self.menu = tk.Frame(self.master,bg="#777777")
 
-        self.m_l1 = Label(self.menu,text='Welcome {}'.format(self.user),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
+        self.m_l1 = Label(self.menu,text='Welcome {}'.format(self.udname.get()),bg="#777777",font=('Times','20','bold'),fg="#ffffff")
         self.m_l1.grid(row=0,column=0,padx=60,pady=10)
 
         self.m_b1 = tk.Button(self.menu,text='DEBIT',bg="#777777",width=10,font=('Times','20','bold'),command=self.debframe,fg="#003b8b")
@@ -489,6 +489,7 @@ class Bank:
 
                     self.f.grid_forget()
                     self.user = UserName
+                    self.udname.set(UserName)
                     if self.menu_forget :
                         self.menu.grid(padx=self.ws*.3,pady=self.hs*.2)
 
