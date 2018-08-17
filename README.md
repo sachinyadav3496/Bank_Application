@@ -1,16 +1,12 @@
-Requirements --> python3 and a sql database server
-Modules used --> tkinter module
+Requirements --> PYthon version 3.5 or upper
+Packages --> pymysql  ( you can install by #pip install pymysql )
+Other --> A SQL database  running on localhost at port 3306
 
 
+BankApp_EXE_file --> contains a single bank_app.exe file just put it into a folder and double click it to run on windows system 
 
-This is just a simple Bank Appliction
+Bank_Package --> it is same file as BankApp the difference is it is divided into modules to make code easy understandable. it has different files having coding for debit, credit, profile, login and signup. The main file is bank_app.py which will run your project
 
-first install database in your system such as mariadb or oracle MySQL
-you can install xampp that is super easy and start your sql server
+Bank_App --> This  is base file having single file bank_app.py to run but it has dependency on SQL server running on localhost:80. To run this file first install a mysql server and run it on localhost:80 than open file database_create.py and change root password in it to the your password of database server. Than run database_create.py first which will create database and tables needed by project after that just run bank_app.py to run the project.
 
-after this enter sql server root password into file "database_create.py"
-
-than just run database_create.py first to setup your database known as bank and user as bank to work on this database as well as the password is also bank
-
-than just run bank_app.py to use this basic tkinter project
-
+StandAloneApp --> It is independent package you can run directly, it uses sqlite3 database of python.
