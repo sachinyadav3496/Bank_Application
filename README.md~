@@ -10,6 +10,3 @@ Bank_Package --> it is same file as BankApp the difference is it is divided into
 Bank_App --> This  is base file having single file bank_app.py to run but it has dependency on SQL server running on localhost:80. To run this file first install a mysql server and run it on localhost:80 than open file database_create.py and change root password in it to the your password of database server. Than run database_create.py first which will create database and tables needed by project after that just run bank_app.py to run the project.
 
 StandAloneApp --> It is independent package you can run directly, it uses sqlite3 database of python.
-
-
-Have fun and enjoy the product very well
